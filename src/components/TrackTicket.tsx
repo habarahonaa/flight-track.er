@@ -41,12 +41,19 @@ export default function TrackTicket({
       day: "numeric",
       month: "short",
     };
+    if (isNaN(date.getTime())) {
+      return "--";
+    }
     return date.toLocaleDateString("en-US", options).toUpperCase();
   };
   const formatTime = (timeString: string) => {
     const date = new Date(timeString);
+    if (isNaN(date.getTime())) {
+      return "--";
+    }
     return date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
   };
+
   return (
     <div className="bg-slate-200 py-4 px-8 h-72 xl:h-1/3 max-w-[95%] w-full xl:max-w-lg fixed bottom-16 left-1/2 xl:left-4 xl:right-8 transform -translate-x-1/2 xl:transform-none xl:translate-x-0 xl:bottom-20 drop-shadow-xl">
       {flightInfo ? (
@@ -90,7 +97,7 @@ export default function TrackTicket({
                 </div>
                 <div className="flex flex-col gap-1">
                   <p className="font-medium">
-                    {formatTime(flightInfo.arr_time) || "--"}
+                    {formatTime(flightInfo.arr_time)}
                   </p>
                   <p className="font-medium text-gray-400">ETA</p>
                 </div>
