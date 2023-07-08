@@ -3,11 +3,14 @@ import React, { ChangeEvent, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBarsStaggered } from "@fortawesome/free-solid-svg-icons";
 
-export default function SearchBar() {
+export default function SearchBar({ setFlightNumber }: any) {
   const [searchValue, setSearchValue] = useState("");
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchValue(event.target.value.toUpperCase());
+    const searchValue = event.target.value.toUpperCase();
+    setSearchValue(searchValue);
+    setFlightNumber(searchValue);
   };
+
   const handleInvalidInput = (event: ChangeEvent<HTMLInputElement>) => {
     event.target.setCustomValidity("Please enter a valid ICAO flight number");
   };
@@ -37,7 +40,7 @@ export default function SearchBar() {
             placeholder="Search by flight number"
             value={searchValue}
             onChange={handleInputChange}
-            maxLength={6}
+            maxLength={8}
             pattern="[A-Z]{2}[0-9]{1,4}"
             onInvalid={handleInvalidInput}
             title="Please enter a valid ICAO flight number"
